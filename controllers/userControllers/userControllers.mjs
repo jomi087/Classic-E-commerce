@@ -7,6 +7,16 @@ const landingPage =async(req,res)=>{
     }
 }
 
+const pageNotFound = async(req,res)=>{
+    try {
+        return res.render('404')
+    } catch (error) {
+        console.log("pageNotFound not found")
+        res.staus(500).send('pageNotFound Error')
+    }
+}
+
 export default { 
     landingPage, 
+    pageNotFound
 };
