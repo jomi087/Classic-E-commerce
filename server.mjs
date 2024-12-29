@@ -8,28 +8,28 @@ dotenv.config();
 import dbConnect from './config/mongoConnect.mjs';
 dbConnect()
 
-//port config
-const port = process.env.serverPort||5000
-
-//Parser config
+//middleware
+app.use(express.static('./public'));
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
 //view Engine config
 app.set('view engine','ejs');
-
-//view Engine path
 app.set('views', ['./views/user', './views/admin']);
-app.use(express.static('./public'))  
 
-import userRoute from './routes/userRoute.mjs';
-app.use('/',userRoute)
+//route modules
+import authRoutes from './routes/user/authRoutes.mjs';
+import productRoutes from './routes/user/productRoutes.mjs'
 
+//routes
+app.use('/auth',authRoutes) 
+app.use('/',productRoutes)
+
+//port config
+const port = process.env.serverPort||5000
 
 app.listen(port,()=>{
-    console.log(`http://localhost:${port}/`)
+    console.log(`http://localhost:${port}`)
 })
-
-
 
